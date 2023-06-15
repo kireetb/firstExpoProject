@@ -9,6 +9,7 @@ import StartScreen from './src/screens/StartScreen'
 const Stack = createStackNavigator()
 
 export default function App() {
+  // let x = 1;
   return (
     <Provider theme={theme}>
       <NavigationContainer>

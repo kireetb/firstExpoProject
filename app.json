@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "firstExpoProject",
+    "jsEngine": "jsc",
     "slug": "firstExpoProject",
     "version": "1.0.0",
     "orientation": "portrait",
