@@ -16,6 +16,8 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState({ value: '', error: '' })
 
   const onLoginPressed = async () => {
+    console.log(email.value);
+    console.log(password.value);
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
@@ -39,8 +41,7 @@ export default function LoginScreen({ navigation }) {
       routes: [{ name: 'Dashboard' }],
     })
   }
-  console.log(email.value);
-  console.log(password.value);
+
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
