@@ -7,7 +7,6 @@ export default function Background({ children }) {
     <ImageBackground
       source={require('../assets/background_dot.png')}
       resizeMode="repeat"
-      fadeDuration={1000}
       style={styles.background}
     >
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: '100%',
-    backgroundColor: "dodgerblue",
+    backgroundColor: theme.colors.surface,
   },
   container: {
     flex: 1,
