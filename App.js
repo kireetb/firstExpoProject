@@ -1,15 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Provider } from 'react-native-paper'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { theme } from './src/core/theme'
-import StartScreen from './src/screens/StartScreen'
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import { Provider } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { theme } from "./src/core/theme";
+import StartScreen from "./src/screens/StartScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import Dashboard from "./src/screens/Dashboard";
+import Map from "./src/components/Map";
+import Direction from "./src/screens/Direction";
+import MapDirections from "./src/components/MapDirections";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 export default function App() {
-  // let x = 1;
   return (
     <Provider theme={theme}>
       <NavigationContainer>
@@ -20,10 +24,14 @@ export default function App() {
           }}
         >
           <Stack.Screen name="StartScreen" component={StartScreen} />
-          </Stack.Navigator>
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen name="Direction" component={Direction} />
+          <Stack.Screen name="MapDirections" component={MapDirections} />
+        </Stack.Navigator>
       </NavigationContainer>
     </Provider>
-  )
+  );
 }
 // export default function App() {
 //   return (
