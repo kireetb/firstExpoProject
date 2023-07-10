@@ -19,6 +19,9 @@ export default function StartScreen({ navigation }) {
       <Button mode="outlined" onPress={() => navigation.navigate("Direction")}>
         Get Directions
       </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate("ChatBot")}>
+        Talk to Bot
+      </Button>
     </Background>
   );
 }

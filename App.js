@@ -10,6 +10,7 @@ import Dashboard from "./src/screens/Dashboard";
 import Map from "./src/components/Map";
 import Direction from "./src/screens/Direction";
 import MapDirections from "./src/components/MapDirections";
+import ChatBot from "./src/screens/ChatBot";
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function App() {
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="Direction" component={Direction} />
           <Stack.Screen name="MapDirections" component={MapDirections} />
+          <Stack.Screen name="ChatBot" component={ChatBot} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
