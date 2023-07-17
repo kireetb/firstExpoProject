@@ -6,6 +6,7 @@ import TextInput from "../components/TextInput";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
+import LoggedIn from "../screens/LoggedIn";
 
 export default function HomeScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -14,33 +15,29 @@ export default function HomeScreen({ navigation }) {
   const [username, setUsername] = useState({ value: "", error: "" });
 
   const onSignupPressed = async () => {
-    console.log("email value", email.value);
-    console.log("pass value", password.value);
-    // const emailError = emailValidator(email.value);
-    // const passwordError = passwordValidator(password.value);
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
 
-    setEmail({ ...email });
-    setPassword({ ...password });
+    setEmail({ ...email, error: emailError });
+    setPassword({ ...password, error: passwordError });
     setName({ ...name });
     setUsername({ ...username });
-    console.log("Inside if condition");
-    try {
-      const response = await axios.post("http://192.168.2.19:3000/rider", {
-        email: email.value,
-        password: password.value,
-        name: name.value,
-        username: username.value,
-      });
-      console.log(response);
-    } catch (error) {
-      console.error(error);
+    if (emailError === "" && passwordError === "") {
+      await axios
+        .post("http://192.168.2.19:3000/rider", {
+          email: email.value,
+          password: password.value,
+          name: name.value,
+          username: username.value,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+      navigation.navigate("LoggedIn", { screen: "StartScreen" });
     }
-    return;
-    // }
-    // console.log(email);
-    // console.log(password);
-    // console.log(name);
-    // console.log(username);
   };
 
   return (

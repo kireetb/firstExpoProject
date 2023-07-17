@@ -5,7 +5,7 @@ import { Provider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { theme } from "./src/core/theme";
-// import StartScreen from "./src/screens/StartScreen";
+import StartScreen from "./src/screens/StartScreen";
 // import LoginScreen from "./src/screens/LoginScreen";
 import Dashboard from "./src/screens/Dashboard";
 import Map from "./src/components/Map";
@@ -15,9 +15,10 @@ import ChatBot from "./src/screens/ChatBot";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./src/screens/HomeScreen";
 import NotificationsScreen from "./src/screens/NotificationsScreen";
+import LoggedIn from "./src/screens/LoggedIn";
 
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -26,40 +27,13 @@ export default function App() {
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+          <Drawer.Screen
+            name="LoggedIn"
+            component={LoggedIn}
+            options={{ headerShown: false }}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
-      {/* <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="StartScreen"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="StartScreen" component={StartScreen} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="Direction" component={Direction} />
-          <Stack.Screen name="MapDirections" component={MapDirections} />
-          <Stack.Screen name="ChatBot" component={ChatBot} />
-        </Stack.Navigator>
-      </NavigationContainer> */}
     </Provider>
   );
 }
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
