@@ -1,34 +1,30 @@
 import { React, useState } from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
+import { theme } from "../core/theme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextInput from "../components/TextInput";
 import { emailValidator } from "../helpers/emailValidator";
 import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
-import LoggedIn from "../screens/LoggedIn";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-export default function HomeScreen({ navigation }) {
+export default function RiderScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
-  const [name, setName] = useState({ value: "", error: "" });
-  const [username, setUsername] = useState({ value: "", error: "" });
 
-  const onSignupPressed = async () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
     setEmail({ ...email, error: emailError });
     setPassword({ ...password, error: passwordError });
-    setName({ ...name });
-    setUsername({ ...username });
+
     if (emailError === "" && passwordError === "") {
       await axios
-        .post("http://192.168.2.19:3000/rider", {
+        .get("http://192.168.2.19:3000/rider/" + email.value, {
           email: email.value,
           password: password.value,
-          name: name.value,
-          username: username.value,
         })
         .then((response) => {
           console.log(response.data);
@@ -36,7 +32,7 @@ export default function HomeScreen({ navigation }) {
         .catch((error) => {
           console.log(error.response.data);
         });
-      navigation.navigate("LoggedIn", { screen: "StartScreen" });
+      // navigation.navigate("LoginRider", { screen: "LoginRider" });
     }
   };
 
@@ -50,18 +46,6 @@ export default function HomeScreen({ navigation }) {
       }}
     >
       <Header>Welcome back.</Header>
-      <TextInput
-        label="Name"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: "" })}
-      />
-      <TextInput
-        label="Username"
-        returnKeyType="next"
-        value={username.value}
-        onChangeText={(text) => setUsername({ value: text, error: "" })}
-      />
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -83,45 +67,42 @@ export default function HomeScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <Button mode="contained" onPress={onSignupPressed}>
-        Sign Up
+      <View style={styles.forgotPassword}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ResetPasswordScreen")}
+        >
+          <Text style={styles.forgot}>Forgot your password?</Text>
+        </TouchableOpacity>
+      </View>
+      <Button mode="contained" onPress={onLoginPressed}>
+        Login
       </Button>
+      <View style={styles.row}>
+        <Text>Don’t have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("SignupRider")}>
+          <Text style={styles.link}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
-// export function CustomDrawerContent(props) {
-//   return (
-//     <DrawerContentScrollView {...props}>
-//       <DrawerItemList {...props} />
-//       <DrawerItem
-//         label="Close drawer"
-//         onPress={() => props.navigation.closeDrawer()}
-//       />
-//       <DrawerItem
-//         label="Toggle drawer"
-//         onPress={() => props.navigation.toggleDrawer()}
-//       />
-//     </DrawerContentScrollView>
-//   );
-// }
-
-// const Drawer = createDrawerNavigator();
-
-// export default function StartScreen({ navigation }) {
-//   return (
-//     <>
-//       <Drawer.Navigator
-//         initialRouteName="Home"
-//         useLegacyImplementation
-//         drawerContent={(props) => <CustomDrawerContent {...props} />}
-//       >
-//         <Drawer.Screen name="Home" component={HomeScreen} />
-//         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-//       </Drawer.Navigator>
-//     </>
-//     // <>
-//     //   <Text>Start Screen</Text>
-//     // </>
-//   );
-// }
+const styles = StyleSheet.create({
+  forgotPassword: {
+    width: "100%",
+    alignItems: "flex-end",
+    marginBottom: 24,
+  },
+  forgot: {
+    fontSize: 13,
+    color: theme.colors.secondary,
+  },
+  row: {
+    flexDirection: "row",
+    marginTop: 4,
+  },
+  link: {
+    fontWeight: "bold",
+    color: theme.colors.primary,
+  },
+});
