@@ -1,9 +1,4 @@
 import { View, Text } from "react-native";
+import RiderScreen from "./RiderScreen";
 
-export default function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Notifications Screen</Text>
-    </View>
-  );
-}
+export default class DriverScreen extends RiderScreen {}

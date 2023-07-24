@@ -37,7 +37,7 @@ export default function App() {
               drawerItemStyle: { display: "none" },
             }}
           />
-          <Drawer.Screen name="Driver" component={LoginScreen} />
+          <Drawer.Screen name="Driver" component={DriverScreen} />
           <Drawer.Screen
             name="LoggedIn"
             component={LoggedIn}
