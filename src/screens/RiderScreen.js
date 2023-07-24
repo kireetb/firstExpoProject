@@ -9,84 +9,6 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-// export default function RiderScreen({ navigation }) {
-//   const [email, setEmail] = useState({ value: "", error: "" });
-//   const [password, setPassword] = useState({ value: "", error: "" });
-
-// const onLoginPressed = async () => {
-//   const emailError = emailValidator(email.value);
-//   const passwordError = passwordValidator(password.value);
-
-//   setEmail({ ...email, error: emailError });
-//   setPassword({ ...password, error: passwordError });
-
-//   if (emailError === "" && passwordError === "") {
-//     await axios
-//       .get("http://192.168.2.19:3000/rider/" + email.value, {
-//         email: email.value,
-//         password: password.value,
-//       })
-//       .then((response) => {
-//         console.log(response.data);
-//       })
-//       .catch((error) => {
-//         console.log(error.response.data);
-//       });
-//     // navigation.navigate("LoginRider", { screen: "LoginRider" });
-//   }
-// };
-
-//   return (
-//     <SafeAreaView
-//       style={{
-//         flex: 1,
-//         alignItems: "center",
-//         justifyContent: "center",
-//         padding: 20,
-//       }}
-//     >
-//       <Header>Welcome back.</Header>
-//       <TextInput
-//         label="Email"
-//         returnKeyType="next"
-//         value={email.value}
-//         onChangeText={(text) => setEmail({ value: text, error: "" })}
-//         error={!!email.error}
-//         errorText={email.error}
-//         autoCapitalize="none"
-//         autoCompleteType="email"
-//         textContentType="emailAddress"
-//         keyboardType="email-address"
-//       />
-//       <TextInput
-//         label="Password"
-//         returnKeyType="done"
-//         value={password.value}
-//         onChangeText={(text) => setPassword({ value: text, error: "" })}
-//         error={!!password.error}
-//         errorText={password.error}
-//         secureTextEntry
-//       />
-//       <View style={styles.forgotPassword}>
-//         <TouchableOpacity
-//           onPress={() => navigation.navigate("ResetPasswordScreen")}
-//         >
-//           <Text style={styles.forgot}>Forgot your password?</Text>
-//         </TouchableOpacity>
-//       </View>
-//       <Button mode="contained" onPress={onLoginPressed}>
-//         Login
-//       </Button>
-//       <View style={styles.row}>
-//         <Text>Don’t have an account? </Text>
-//         <TouchableOpacity onPress={() => navigation.navigate("SignupRider")}>
-//           <Text style={styles.link}>Sign up</Text>
-//         </TouchableOpacity>
-//       </View>
-//     </SafeAreaView>
-//   );
-// }
-
 export default class RiderScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -109,6 +31,35 @@ export default class RiderScreen extends React.Component {
     this.setState((prevState) => ({
       password: { value: password.value, error: password.error },
     }));
+  };
+
+  onLoginPressed = async () => {
+    const emailError = emailValidator(this.state.email.value);
+    const passwordError = passwordValidator(this.state.password.value);
+
+    this.setEmail({ ...this.state.email, error: emailError });
+    this.setPassword({ ...this.state.password, error: passwordError });
+
+    if (emailError === "" && passwordError === "") {
+      await axios
+        .get(
+          "http://192.168.2.19:3000/rider/" +
+            this.state.email.value +
+            "/" +
+            this.state.password.value
+        )
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          this.setPassword({
+            ...this.state.password,
+            error: error.response.data.error,
+          });
+        });
+      // navigation.navigate("LoginRider", { screen: "LoginRider" });
+    }
   };
 
   render() {
@@ -151,7 +102,7 @@ export default class RiderScreen extends React.Component {
             <Text style={styles.forgot}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>
-        <Button mode="contained" onPress={() => console.log("Login pressed")}>
+        <Button mode="contained" onPress={this.onLoginPressed}>
           Login
         </Button>
         <View style={styles.row}>
