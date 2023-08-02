@@ -13,23 +13,22 @@ import Direction from "./src/screens/Direction";
 import MapDirections from "./src/components/MapDirections";
 import ChatBot from "./src/screens/ChatBot";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import RiderScreen from "./src/screens/RiderScreen";
-import DriverScreen from "./src/screens/DriverScreen";
+import Rider from "./src/screens/Rider";
+import Driver from "./src/screens/Driver";
 import LoggedIn from "./src/screens/LoggedIn";
 import Root from "./src/screens/Root";
 import LoginScreen from "./src/screens/LoginScreen";
 import SignupRider from "./src/screens/SignupRider";
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <Provider theme={theme}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={Root} />
-          <Drawer.Screen name="Rider" component={RiderScreen} />
+        <Drawer.Navigator initialRouteName="Root">
+          <Drawer.Screen name="Root" component={Root} />
+          <Drawer.Screen name="Rider" component={Rider} />
           <Drawer.Screen
             name="SignupRider"
             component={SignupRider}
@@ -37,12 +36,20 @@ export default function App() {
               drawerItemStyle: { display: "none" },
             }}
           />
-          <Drawer.Screen name="Driver" component={DriverScreen} />
+          <Drawer.Screen name="Driver" component={Driver} />
+          {/* <Drawer.Screen
+            name="SignupDriver"
+            component={SignupDriver}
+            options={{
+              drawerItemStyle: { display: "none" },
+            }}
+          /> */}
           <Drawer.Screen
             name="LoggedIn"
             component={LoggedIn}
             options={{
               drawerItemStyle: { display: "none" },
+              headerShown: false,
             }}
           />
         </Drawer.Navigator>

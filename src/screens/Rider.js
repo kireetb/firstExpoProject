@@ -9,13 +9,15 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
-export default class RiderScreen extends React.Component {
+export default class Rider extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: { value: "", error: "" },
       password: { value: "", error: "" },
+      riderselected: false,
+      type: this.constructor.name.toLowerCase(),
     };
     this.setEmail = this.setEmail.bind(this);
     this.setPassword = this.setPassword.bind(this);
@@ -41,15 +43,21 @@ export default class RiderScreen extends React.Component {
     this.setPassword({ ...this.state.password, error: passwordError });
 
     if (emailError === "" && passwordError === "") {
+      const name = this.constructor.name;
+      console.log("Awaiting response from express..");
       await axios
         .get(
-          "http://192.168.2.19:3000/rider/" +
+          "http://192.168.2.19:3000/" +
+            name.toLowerCase() +
+            "/" +
             this.state.email.value +
             "/" +
             this.state.password.value
         )
         .then((response) => {
           console.log(response.data);
+          this.state.riderselected = true;
+          this.props.navigation.navigate("LoggedIn", { screen: "LoggedIn" });
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -58,12 +66,12 @@ export default class RiderScreen extends React.Component {
             error: error.response.data.error,
           });
         });
-      // navigation.navigate("LoginRider", { screen: "LoginRider" });
     }
   };
 
   render() {
-    console.log(this.constructor.name);
+    // console.log(this.constructor.name);
+    // if (!this.state.riderselected) {
     return (
       <SafeAreaView
         style={{
@@ -113,6 +121,20 @@ export default class RiderScreen extends React.Component {
         </View>
       </SafeAreaView>
     );
+    // } else {
+    //   return (
+    //     <SafeAreaView
+    //       style={{
+    //         flex: 1,
+    //         alignItems: "center",
+    //         justifyContent: "center",
+    //         padding: 20,
+    //       }}
+    //     >
+    //       <Header>When Rider is selected</Header>
+    //     </SafeAreaView>
+    //   );
+    // }
   }
 }
 

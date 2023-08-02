@@ -1,12 +1,7 @@
 import React from "react";
 import Background from "../components/Background";
-import Logo from "../components/Logo";
-import Header from "../components/Header";
-import BackButton from "../components/BackButton";
 import Button from "../components/Button";
-import Map from "../components/Map";
 import { View, Text } from "react-native";
-import { requestLocationPermission } from "../helpers/requestLocationPermission";
 import { useState } from "react";
 import * as Location from "expo-location";
 
@@ -39,7 +34,6 @@ export default function Dashboard({ navigation }) {
   console.log("Dashboard location: ", location);
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
       <View style={{ flex: 1 }}>
         <Button mode="contained" onPress={onGetLocation}>
           Get Location

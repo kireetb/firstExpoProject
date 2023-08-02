@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 
-export default function Root() {
+export default function Home() {
   return (
     <SafeAreaView
       style={{
@@ -11,7 +11,12 @@ export default function Root() {
         padding: 20,
       }}
     >
-      <Header>Select your role from side bar</Header>
+      <Header>Inside home for Rider/Driver</Header>
+      {/* Maps in the background 
+          From and to location over the maps current location
+          Display total time taken and total distance covered
+          Send request
+      */}
     </SafeAreaView>
   );
 }
