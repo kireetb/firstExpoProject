@@ -12,7 +12,7 @@ const LATITUDE = 37.771707;
 const LONGITUDE = -122.4053769;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-const GOOGLE_PLACES_API_KEY = "AIzaSyDbaXShT7qxzdKSDfPfkq_1Lksoad40Qyc";
+const GOOGLE_PLACES_API_KEY = "<Google API Key>";
 
 export default class MapDirections extends React.Component {
   constructor(props) {
